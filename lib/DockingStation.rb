@@ -2,10 +2,11 @@ require './lib/Bike'
 
 class DockingStation
 attr_accessor :bikes
-
+attr_accessor :max_capacity
 
 	def initialize
 		@bikes = []
+		@max_capacity = 20
 	end
 
 	def release
@@ -14,7 +15,7 @@ attr_accessor :bikes
 	end
 
 	def dock(bike)
-		fail "No more space" unless @bikes.size < 1
+		fail "No more space" unless @bikes.size < max_capacity
 		@bikes << bike 
 	end
 
