@@ -8,15 +8,19 @@ attr_accessor :max_capacity
 		@bikes = []
 		@max_capacity = 20
 	end
-
+private
+	def full?
+		@bikes.size < max_capacity ? true : false
+	end
+public
 	def release
-		fail "No bikes to release" unless @bikes.size > 0
+		fail "No bikes to release" unless !@bikes.empty?
 		@bikes.pop
 	end
 
 	def dock(bike)
-		fail "No more space" unless @bikes.size < max_capacity
-		@bikes << bike 
+		fail "No more space" unless full?
+		@bikes << bike
 	end
 
 	def inspect
