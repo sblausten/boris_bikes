@@ -9,12 +9,13 @@ attr_accessor :bikes
 	end
 
 	def release
-		fail "oops" unless @bikes.size > 0
+		fail "No bikes to release" unless @bikes.size > 0
 		@bikes.pop
 	end
 
 	def dock(bike)
-		@bikes << bike
+		fail "No more space" unless @bikes.size < 1
+		@bikes << bike 
 	end
 
 	def inspect
