@@ -21,7 +21,7 @@ describe DockingStation do
     end
 
     it "won't accept more bikes than station's maximum capacity which is 20 bikes" do
-    	20.times{ bike = Bike.new
+    	subject.max_capacity.times{ bike = Bike.new
     		subject.bikes << bike }
     	expect{subject.dock(bike)}.to raise_error "No more space"
 	end
