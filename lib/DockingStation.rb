@@ -1,18 +1,25 @@
 require './lib/Bike'
 
+MAX_CAPACITY = 20
+
+
 class DockingStation
 attr_accessor :bikes
-attr_accessor :max_capacity
+#attr_accessor :max_capacity
 
 	def initialize
 		@bikes = []
-		@max_capacity = 20
+
 	end
+
 private
+
 	def full?
-		@bikes.size < max_capacity ? true : false
+		@bikes.size < MAX_CAPACITY ? true : false
 	end
+
 public
+
 	def release
 		fail "No bikes to release" unless !@bikes.empty?
 		@bikes.pop
