@@ -1,23 +1,20 @@
 require './lib/Bike'
 
-MAX_CAPACITY = 20
+DEFAULT_CAPACITY = 20
 
 
 class DockingStation
-attr_accessor :bikes
-#attr_accessor :max_capacity
+attr_accessor :bikes, :capacity
 
-	def initialize
+	def initialize(capacity = DEFAULT_CAPACITY)
+		raise ArgumentError, "Expecting int" unless (capacity.is_a? Integer) || (capacity.is_a? Float)
 		@bikes = []
-
+		if capacity.is_a? Integer
+			@capacity = capacity
+		elsif capacity.is_a? Float
+			@capacity = capacity.round
+		end
 	end
-
-private
-
-	def full?
-		@bikes.size < MAX_CAPACITY ? true : false
-	end
-
 public
 
 	def release
@@ -32,6 +29,12 @@ public
 
 	def inspect
 
+	end
+
+private
+
+	def full?
+		@bikes.size < @capacity ? true : false
 	end
 
 end

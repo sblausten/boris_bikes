@@ -2,12 +2,12 @@ class Bike
 attr_accessor :docked
 
 	def initialize
-		@condition = true
+		@working = true
 		@docked = true
 	end
 
 	def working?
-		@condition
+		@working
 	end
 
 end
