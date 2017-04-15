@@ -7,7 +7,9 @@ class DockingStation
 attr_accessor :bikes, :capacity
 
 	def initialize(capacity = DEFAULT_CAPACITY)
-		raise ArgumentError, "Expecting int" unless (capacity.is_a? Integer) || (capacity.is_a? Float)
+		unless (capacity.is_a? Integer) || (capacity.is_a? Float)
+			raise ArgumentError, "Expecting int" 
+		end
 		@bikes = []
 		if capacity.is_a? Integer
 			@capacity = capacity
@@ -19,16 +21,15 @@ public
 
 	def release
 		fail "No bikes to release" unless !@bikes.empty?
+		fail "Bike not working" if @bikes.last[:working] == false  
 		@bikes.pop
 	end
 
-	def dock(bike)
+	def dock(bike, condition=true)
 		fail "No more space" unless full?
-		@bikes << bike
-	end
-
-	def inspect
-
+		bike.working = condition
+		bike.docked = true
+		@bikes << bike.status
 	end
 
 private

@@ -16,7 +16,6 @@ describe DockingStation do
         expect {subject.new('teddy')}.to raise_error(ArgumentError, "Expecting int")
       end
     end
-
     context 'Assigning @capacity' do
       subject {DockingStation}
       it "It  writes the argument it is passed as an integer to @capacity" do
@@ -36,26 +35,36 @@ describe DockingStation do
 
   describe '#release' do
     it "It raises error when there are no bikes to be released" do
+      subject.bikes = []
       expect {subject.release}.to raise_error "No bikes to release"
     end
-    it "It a) gets a bike, and then b) expects the bike to be working" do
+    it "It releases a bike if it is working" do
       bike = Bike.new
       subject.bikes << bike
-      expect(subject.release.working?).to eq(true)
+      expect(subject.release.working).to eq(true)
+    end
+    it "It doesn't release a bike if it is not working" do
+      bike = Bike.new
+      bike.working = false
+      subject.bikes << bike.status
+      expect {subject.release}.to raise_error "Bike not working"
     end
   end
 
   describe "#dock" do
     bike = Bike.new
     it "It docks a bike at a docking station" do
-      expect(subject.dock(bike)).to eq([bike])
+      expect(subject.dock(bike)).to eq([bike.status])
     end
-    it "It won't accept more bikes than station's maximum capacity which is 20 bikes" do
+    it "It won't accept more bikes than station's capacity" do
       subject.capacity.times{ bike = Bike.new
                           subject.bikes << bike }
       expect{subject.dock(bike)}.to raise_error "No more space"
     end
-
+    it "It docks a bike at a docking station and can optionally 
+    assign @working status" do
+      expect(subject.dock(bike, false)).to eq([subject.bikes.last])
+    end
   end
 
 end
